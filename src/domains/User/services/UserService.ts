@@ -14,6 +14,23 @@ class UserService {
         });
         return user;
     }
+
+    async readId(id: number){
+        const user = await prisma.user.findUnique ({
+            where: {
+                id: id
+            },
+        });
+        return user;
+    }
+
+    async read(){
+        const user = await prisma.user.findMany ();
+        return user;
+    }
+
+
+
 }
 
 
