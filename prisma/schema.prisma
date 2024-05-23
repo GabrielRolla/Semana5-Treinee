@@ -18,3 +18,10 @@ model User {
   photo     String?
   role      String
 }
+
+model Artista {
+  idArtista Int @id @default(autoincrement())
+  name      String
+  foto      String?
+  streams   String
+}
