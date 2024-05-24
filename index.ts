@@ -4,17 +4,17 @@ import UserService from "./src/domains/User/services/UserService";
 async function main() {
     const body = ({
         id: 0,
-        name: "Glenio",
-        email: "glenio@gmail.com",
+        name: "Laudelio",
+        email: "laudelio@gmail.com",
         photo: null,
-        password: "senha123",
-        role: "admin"
+        password: "senha312",
+        role: "user"
         
     })
 
     const user = await UserService.create(body)
-
-    console.log(user);
+    
+    console.log(await UserService.read());
     
 }
 
