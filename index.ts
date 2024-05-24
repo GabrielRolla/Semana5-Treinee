@@ -7,12 +7,12 @@ async function main() {
         name: "Laudelio",
         email: "laudelio@gmail.com",
         photo: null,
-        password: "senha321",
+        password: "senha312",
         role: "user"
         
     })
 
-    //const user = await UserService.create(body)
+    const user = await UserService.create(body)
     
     console.log(await UserService.read());
     
