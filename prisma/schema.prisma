@@ -19,9 +19,20 @@ model User {
   role      String
 }
 
-model Artista {
-  idArtista Int @id @default(autoincrement())
+model Music {
+    id        Int @id @default(autoincrement())
+    name      String
+    genre     String
+    album     String
+
+    artist    Artist @relation(fields:[artistId], references:[id])
+    artistId  Int @unique
+}
+
+model Artist {
+  id        Int @id @default(autoincrement())
   name      String
   foto      String?
   streams   String
+  musics    Music[]
 }
