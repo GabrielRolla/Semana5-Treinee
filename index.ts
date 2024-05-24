@@ -1,5 +1,5 @@
 import UserService from "./src/domains/User/services/UserService";
-
+import ArtistService from "./src/domains/Artist/services/ArtistService";
 
 async function main() {
     const body = ({
@@ -19,3 +19,17 @@ async function main() {
 }
 
 main()
+
+async function main() {
+    const body = ({
+        id: 0,
+        name: "Galinha Pintadinha"
+        foto: null,
+        streams: "1000000"
+    })
+
+    const artist = await ArtistService.create(body)
+
+    console.log(await ArtistService.read());
+    
+}
