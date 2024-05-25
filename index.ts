@@ -23,13 +23,13 @@ main()
 async function main() {
     const body = ({
         id: 0,
-        name: "Galinha Pintadinha"
-        foto: null,
+        name: "Galinha Pintadinha",
+        photo: null,
         streams: "1000000"
     })
 
     const artist = await ArtistService.create(body)
 
-    console.log(await ArtistService.read());
+    console.log(artist);
     
 }

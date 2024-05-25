@@ -7,7 +7,7 @@ class ArtistService {
         const artist = await prisma.artist.create({
             data: {
                 name: body.name,
-                foto: body.foto,
+                photo: body.photo,
                 streams: body.streams
             }
         });
