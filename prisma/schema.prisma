@@ -25,6 +25,14 @@ model Music {
     genre     String
     album     String
 
-    artist    Artist @relation(fields:[artistId], references[id])
+    artist    Artist @relation(fields:[artistId], references:[id])
     artistId  Int @unique
+}
+
+model Artist {
+  id        Int @id @default(autoincrement())
+  name      String
+  photo     String?
+  streams   String
+  musics    Music[]
 }
