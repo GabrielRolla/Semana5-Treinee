@@ -1,6 +1,8 @@
 import UserService from "./src/domains/User/services/UserService";
 import ArtistService from "./src/domains/Artist/services/ArtistService";
+import MusicService from "./src/domains/Music/services/MusicService";
 
+/*
 async function main() {
     const body = ({
         id: 0,
@@ -8,22 +10,23 @@ async function main() {
         email: "laudelio@gmail.com",
         photo: null,
         password: "senha312",
-        role: "user"
+        role: "admin"
         
     })
 
     const user = await UserService.create(body)
     
-    console.log(await UserService.read());
+    console.log(user);
     
 }
+*/
 
-main()
 
+/*
 async function main() {
     const body = ({
         id: 0,
-        name: "Galinha Pintadinha",
+        name: "Olivia Rodrigues",
         photo: null,
         streams: "1000000"
     })
@@ -33,3 +36,24 @@ async function main() {
     console.log(artist);
     
 }
+*/
+
+
+async function main() {
+    const body = ({
+        id: 0,
+        name: "Werewolf",
+        album: 'Vampiro',
+        genre: 'pop',
+        artistId: 6,       
+    })
+
+    const music = await MusicService.create(body)
+    
+    console.log(music);
+    
+}
+
+
+
+main()
