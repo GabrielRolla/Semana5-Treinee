@@ -1,6 +1,16 @@
-import UserService from "./src/domains/User/services/UserService";
-import ArtistService from "./src/domains/Artist/services/ArtistService";
-import MusicService from "./src/domains/Music/services/MusicService";
+import { app } from "./config/expressConfig";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+app.listen(precess.env.PORT, () => {
+    console.log ("Servidor hosteado na porta " + process.env.PORT);
+});
+
+
+//import UserService from "./src/domains/User/services/UserService";
+//import ArtistService from "./src/domains/Artist/services/ArtistService";
+//import MusicService from "./src/domains/Music/services/MusicService";
 
 /*
 async function main() {
