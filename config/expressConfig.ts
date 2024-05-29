@@ -19,6 +19,7 @@ app.use(express.urlencoded({
 }));
 
 // Add controller routes...
+app.use("/api/users", UserRouter);
 app.use("/api/musics", MusicRouter);
 
 
