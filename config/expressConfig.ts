@@ -1,7 +1,8 @@
 import cors, { CorsOptions } from "cors";
-import dotenv from "dotenv";
-import express, { Express } from "express";
-import MusicRouter from "../src/domains/Music/controllers/index";
+import dotenv                from "dotenv";
+import express, { Express }  from "express";
+import MusicRouter           from "../src/domains/Music/controllers/index";
+import UserRouter            from "../src/domains/User/controllers/index";
 
 dotenv.config();
 
@@ -22,6 +23,4 @@ app.use(express.urlencoded({
 app.use("/api/users", UserRouter);
 app.use("/api/musics", MusicRouter);
 
-
-app.listen(process.env.PORT);
 export default app;
