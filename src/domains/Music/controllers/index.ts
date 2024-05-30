@@ -3,7 +3,7 @@ import MusicService from "../services/MusicService";
 
 const router = Router();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/get", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const musics = await MusicService.getAll();
         res.json(musics);
@@ -12,7 +12,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/get/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const music = await MusicService.getById(Number(req.params.id));
         res.json(music);
@@ -21,7 +21,7 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/post", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const music = await MusicService.create(req.body);
         res.json(music);
@@ -30,7 +30,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.put("/", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const music = await MusicService.update(req.body);
         res.json(music);
@@ -39,10 +39,10 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/delete/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const music = await MusicService.deleteId(Number(req.params.id));
-        return music;
+        res.json(music);
     } catch (error) {
         next(error);
     }
