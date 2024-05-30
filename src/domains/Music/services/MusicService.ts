@@ -15,7 +15,7 @@ class MusicService {
         return music;
     }
 
-    async readId(id: number) {
+    async getById(id: number) {
         const music = await prisma.music.findUnique({
             where: {
                 id: id
@@ -25,12 +25,13 @@ class MusicService {
         return music;
     }
 
-    async readAll() {
+    async getAll() {
         const musics = await prisma.music.findMany({
             orderBy: {
                 id: 'desc'
             }
         })
+
         return musics;
     }
 
