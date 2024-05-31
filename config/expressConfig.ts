@@ -13,6 +13,6 @@ const options: CorsOptions = {
 
 app.use(cors(options));
 app.use(express.json());
-app.use(express.urlcoded({
-    extend: true    
+app.use(express.urlencoded({
+    extended: true    
 }));
