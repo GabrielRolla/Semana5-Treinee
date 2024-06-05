@@ -24,6 +24,6 @@ app.use(express.urlencoded({
 // Add controller routes...
 app.use("/api/users", UserRouter);
 app.use("/api/musics", MusicRouter);
-app.use("/api/artist", ArtistRouter);
+app.use("/api/artists", ArtistRouter);
 
 export default app;
