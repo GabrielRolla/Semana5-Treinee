@@ -3,6 +3,9 @@ import  prisma  from "../../../../config/prismaClient";
 import { Stream } from "stream";
 
 class ArtistService {
+    getAll() {
+        throw new Error("Method not implemented.");
+    }
     async create(body: Artist){
         const artist = await prisma.artist.create({
             data: {

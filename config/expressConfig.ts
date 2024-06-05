@@ -3,6 +3,8 @@ import dotenv                from "dotenv";
 import express, { Express }  from "express";
 import MusicRouter           from "../src/domains/Music/controllers/index";
 import UserRouter            from "../src/domains/User/controllers/index";
+import ArtistRouter          from "../src/domains/Artist/controllers/index";
+ 
 
 dotenv.config();
 
@@ -22,5 +24,6 @@ app.use(express.urlencoded({
 // Add controller routes...
 app.use("/api/users", UserRouter);
 app.use("/api/musics", MusicRouter);
+app.use("/api/artist", ArtistRouter);
 
 export default app;
