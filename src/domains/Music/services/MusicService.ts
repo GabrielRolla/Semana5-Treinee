@@ -10,8 +10,7 @@ class MusicService {
                 genre: body.genre,
                 artistId: body.artistId
             }
-        })
-
+        });
         return music;
     }
 
@@ -20,7 +19,7 @@ class MusicService {
             where: {
                 id: id
             },
-        })
+        });
 
         return music;
     }
@@ -30,7 +29,7 @@ class MusicService {
             orderBy: {
                 id: 'desc'
             }
-        })
+        });
 
         return musics;
     }
@@ -41,7 +40,7 @@ class MusicService {
                 id: body.id
             },
             data: body
-        })
+        });
         
         return music;
     }
@@ -51,7 +50,7 @@ class MusicService {
             where: {
                 id: id
             },
-        })
+        });
 
         return music;
     }
