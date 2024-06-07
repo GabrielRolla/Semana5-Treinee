@@ -1,4 +1,5 @@
 import cors, { CorsOptions } from "cors";
+import cookieParser          from "cookie-parser";
 import dotenv                from "dotenv";
 import express, { Express }  from "express";
 import MusicRouter           from "../src/domains/Music/controllers/index";
@@ -16,6 +17,7 @@ const options: CorsOptions = {
 };
 
 app.use(cors(options));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({
 	extended: true
