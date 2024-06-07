@@ -21,4 +21,32 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
+router.post("/post", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await UserService.create(req.body);
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await UserService.update(req.body);
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete("/delete/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await UserService.deleteId(Number(req.params.id));
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+});
+
 export default router;
+
