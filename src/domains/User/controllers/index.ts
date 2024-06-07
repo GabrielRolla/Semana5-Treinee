@@ -3,6 +3,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import statusCodes from "../../../../utils/constants/statusCodes";
 import UserService from "../services/UserService";
 
+
 const router = Router();
 
 router.post("/login", notLoggedIn, login);
@@ -27,7 +28,7 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
-router.post("/post", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/users/create", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.create(req.body);
         res.json(user);
@@ -35,6 +36,15 @@ router.post("/post", async (req: Request, res: Response, next: NextFunction) => 
         next(error);
     }
 });
+
+router.post("/users/login", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await login(req, res, next);    
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
     try {
