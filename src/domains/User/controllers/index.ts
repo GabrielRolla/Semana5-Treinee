@@ -10,6 +10,8 @@ router.post("/login", notLoggedIn, login);
 
 router.post("/logout", verifyJWT, logout);
 
+router.get("/account", verifyJWT, UserService.getAccount)
+
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const users = await UserService.read();
@@ -45,7 +47,6 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
         next(error);
     }
 });
-
 
 router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -3,6 +3,8 @@ import  prisma  from "../../../../config/prismaClient";
 import bcrypt from "bcrypt";
 import { InvalidParamError } from "../../../../errors/InvalidParamError";
 import { QueryError } from "../../../../errors/QueryError";    
+import { NextFunction } from "express";
+import { LoginError } from "../../../../errors/LoginError";
 
 class UserService {
     async encryptPassword(password: string) {
@@ -105,6 +107,20 @@ class UserService {
                 email: email
             },
         });
+    }
+
+    async getAccount(body: User) {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: body.id
+            }
+        });
+
+        if (!user) {
+            throw new LoginError("Faça login para acessar sua conta.");
+        }
+
+        return user;
     }
 }
 
