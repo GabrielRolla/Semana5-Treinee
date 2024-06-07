@@ -12,6 +12,23 @@ router.get("/get/:id", async (req: Request, res: Response, next: NextFunction) =
     }
 });
 
+router.put("/put/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const artist = await ArtistService.readId(Number(req.params.id));
+        res.json(artist);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post("/post/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const artist = await ArtistService.readId(Number(req.params.id));
+        res.json(artist);
+    } catch (error) {
+        next(error);
+    }
+});
 
 router.delete("/delete/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
