@@ -1,7 +1,13 @@
+import { login, logout, notLoggedIn, verifyJWT } from "../../../middlewares/auth";
 import { Router, Request, Response, NextFunction } from "express";
+import statusCodes from "../../../../utils/constants/statusCodes";
 import UserService from "../services/UserService";
 
 const router = Router();
+
+router.post("/login", notLoggedIn, login);
+
+router.post("/logout", verifyJWT, logout);
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 	try {
