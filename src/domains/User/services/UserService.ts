@@ -1,8 +1,23 @@
 import { User } from "@prisma/client";
 import  prisma  from "../../../../config/prismaClient";
+import { InvalidParamError } from "../../../../errors/InvalidParamError";
+import { QueryError } from "../../../../errors/QueryError";
 
 class UserService {
-    async create(body: User){
+    async create(body: User) {
+        const checkUser = await prisma.user.findUnique({
+            where: {
+                email: body.email
+            }
+        });
+        if (!checkUser) {
+            throw new QueryError("Esse email já está cadastrado");
+        }
+
+        if (body.email == null) {
+            throw new InvalidParamError("Email não informado!");
+        }
+
         const user = await prisma.user.create({
             data: {
                 name: body.name,
@@ -12,11 +27,12 @@ class UserService {
                 role: body.role
             }
         });
+
         return user;
     }
 
     async readId(id: number){
-        const user = await prisma.user.findUnique ({
+        const user = await prisma.user.findUnique({
             where: {
                 id: id
             },
@@ -38,17 +54,35 @@ class UserService {
         return user;
     }
 
-    async update(body: User){
-        const user = await prisma.user.update ({
+    async update(body: User) {
+        const checkUser = await prisma.user.findUnique({
+            where: {
+                id: body.id
+            },
+        });
+        if (!checkUser) {
+            throw new QueryError("Usuário não cadastrado no sistema!");
+        }
+
+        const user = await prisma.user.update({
             where: {
                 id: body.id
             },
             data: body
         });
+
         return user;
     }
 
-    async deleteId(id:number){
+    async deleteId(id: number) {
+        const checkUser = prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        });
+        if (!checkUser) {
+            throw new QueryError("Usuário não existe.");
+        }
         const user = await prisma.user.delete({
             where: {
                 id: id
