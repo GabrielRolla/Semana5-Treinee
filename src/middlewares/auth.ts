@@ -1,11 +1,11 @@
-import { compare } from "bcrypt";
-import prisma from "../../config/prismaClient";
-import { User } from "@prisma/client";
+import prisma                              from "../../config/prismaClient";
+import { User }                            from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
-import { PermissionError } from "../../errors/PermissionError";
-import statusCodes from "../../utils/constants/statusCodes";
-import { sign, verify } from "jsonwebtoken";
-import { TokenError } from "../../errors/TokenError";
+import { PermissionError }                 from "../../errors/PermissionError";
+import statusCodes                         from "../../utils/constants/statusCodes";
+import { sign, verify, JwtPayload }        from "jsonwebtoken";
+import { TokenError }                      from "../../errors/TokenError";
+import { compare }                         from "bcrypt";
 
 function generateJWT(user: User, res: Response) {
     const body = {
@@ -82,7 +82,7 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export async function logout(req: Request, res: Response, next: NextFunction) {
+export async function notLoggedIn(req: Request, res: Response, next: NextFunction) {
     try {
 
     } catch (err) {
@@ -91,5 +91,5 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
 }
 
 export function checkRole() {
-    
+
 }

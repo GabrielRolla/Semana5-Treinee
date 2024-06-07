@@ -14,7 +14,7 @@ declare global {
             DATABASE_URL: string,
             SECRET_KEY: string,
             JWT_EXPIRATION: string,
-            NODE_ENV: string
+            NODE_ENV: string;
         }
     }
 }

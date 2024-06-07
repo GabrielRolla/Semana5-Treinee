@@ -1,4 +1,4 @@
-import { login, verifyJWT } from "../../../middlewares/auth";
+import { login, logout, notLoggedIn, verifyJWT } from "../../../middlewares/auth";
 import { Router, Request, Response, NextFunction } from "express";
 import statusCodes from "../../../../utils/constants/statusCodes";
 import UserService from "../services/UserService";
