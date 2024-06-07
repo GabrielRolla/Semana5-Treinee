@@ -28,18 +28,19 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
-router.post("/users/create", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/create", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.create(req.body);
-        res.json(user);
+        res.status(statusCodes.SUCCESS).json(user);
     } catch (error) {
         next(error);
     }
 });
 
-router.post("/users/login", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await login(req, res, next);    
+        const user = await login(req, res, next);   
+        res.status(statusCodes.SUCCESS).json(user);
     } catch (error) {
         next(error);
     }
