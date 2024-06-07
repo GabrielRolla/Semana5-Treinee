@@ -17,6 +17,7 @@ class MusicService {
                 artistId: body.artistId
             }
         });
+
         return music;
     }
 
@@ -27,10 +28,6 @@ class MusicService {
             },
         });
 
-        if (!music) {
-            throw new QueryError("Música não existe no sistema!");
-        }
-
         return music;
     }
 
@@ -40,10 +37,6 @@ class MusicService {
                 id: 'desc'
             }
         });
-
-        if (!musics) {
-            throw new QueryError("Não há músicas cadastradas no sistema!");
-        }
 
         return musics;
     }
