@@ -85,6 +85,31 @@ class UserService {
         return user;
     }
 
+    async updatePassword(id: number, newPassword: string) {
+        const checkUser = await prisma.user.findUnique({
+            where: {
+                id: id,
+            },
+        });
+        if (!checkUser) {
+            throw new QueryError("Usuário não cadastrado no sistema!");
+        }
+
+        const encrypted = await this.encryptPassword(newPassword);
+
+        const user = await prisma.user.update({
+            where: {
+                id: id,
+            },
+            data: {
+                password: encrypted,
+            }
+        });
+
+        return user;
+    }
+    
+
     async deleteId(id: number) {
         const checkUser = prisma.user.findUnique({
             where: {
