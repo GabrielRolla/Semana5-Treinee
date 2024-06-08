@@ -10,6 +10,8 @@ router.post("/login", notLoggedIn, login);
 
 router.post("/logout", verifyJWT, logout);
 
+router.get("/account", verifyJWT, UserService.getAccount)
+
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const users = await UserService.read();
@@ -28,23 +30,23 @@ router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
-router.post("/users/create", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/create", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.create(req.body);
-        res.json(user);
+        res.status(statusCodes.SUCCESS).json(user);
     } catch (error) {
         next(error);
     }
 });
 
-router.post("/users/login", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await login(req, res, next);    
+        const user = await login(req, res, next);   
+        res.status(statusCodes.SUCCESS).json(user);
     } catch (error) {
         next(error);
     }
 });
-
 
 router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
     try {

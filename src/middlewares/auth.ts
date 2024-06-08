@@ -76,7 +76,11 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
 export async function logout(req: Request, res: Response, next: NextFunction) {
     try {
-
+        res.clearCookie("jwt", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development"
+        });
+        res.status(statusCodes.SUCCESS).json("Logout efetuado com sucesso");
     } catch (err) {
         next(err);
     }
@@ -84,7 +88,13 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
 
 export async function notLoggedIn(req: Request, res: Response, next: NextFunction) {
     try {
+        const token = cookieExtractor(req);
+        
+        if (!token) {
+            res.status(statusCodes.SUCCESS).send("Usuário não está logado");
+        }
 
+        res.status(statusCodes.NO_CONTENT).send("Usuário está logado");
     } catch (err) {
         next(err);
     }
