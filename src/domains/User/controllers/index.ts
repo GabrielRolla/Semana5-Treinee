@@ -48,8 +48,9 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
     }
 });
 
-router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/users/account/update", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
+        
         const user = await UserService.update(req.body);
         res.json(user);
     } catch (error) {
@@ -57,7 +58,18 @@ router.put("/put", async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-router.delete("/delete/:id", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/users/account/password", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        
+        const { id, newPassword } = req.body;
+        const user = await UserService.updatePassword(id, newPassword);
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete("/delete/:id", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.deleteId(Number(req.params.id));
         res.json(user);
