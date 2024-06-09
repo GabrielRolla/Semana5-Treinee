@@ -1,9 +1,12 @@
 import { Router, Request, Response, NextFunction } from "express";
+import { login, logout, notLoggedIn, verifyJWT } from "../../../middlewares/auth";
 import ArtistService from "../services/ArtistService";
 
 const router = Router();
 
-router.get("/get/:id", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/artists", verifyJWT, ArtistService.read)
+
+router.get("/artists/:id", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const artist = await ArtistService.readId(Number(req.params.id));
         res.json(artist);

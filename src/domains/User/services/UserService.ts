@@ -60,9 +60,14 @@ class UserService {
         return user;
     }
 
-    async read(){
-        const user = await prisma.user.findMany ();
-        return user;
+    async read() {
+        const users = await prisma.user.findMany({
+            orderBy: {
+                name: "asc"
+            }
+        });
+
+        return users;
     }
 
     async update(body: User) {

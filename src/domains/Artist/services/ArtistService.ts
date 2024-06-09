@@ -29,9 +29,14 @@ class ArtistService {
         return artist;
     }
 
-    async read(){
-        const artist = await prisma.artist.findMany ();
-        return artist;
+    async read() {
+        const artists = await prisma.artist.findMany({
+            orderBy: {
+                name: "asc"
+            }
+        });
+
+        return artists;
     }
 
     async update(body: Artist){
