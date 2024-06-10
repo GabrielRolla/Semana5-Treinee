@@ -53,9 +53,10 @@ router.put("/users/account/password", verifyJWT, async (req: Request, res: Respo
     }
 });
 
-router.delete("users/acount/delete", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/users/account/delete", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = await UserService.deleteId(Number(req.params.id));
+        const { id } = req.body;
+        const user = await UserService.deleteId(id);
         res.json(user);
     } catch (error) {
         next(error);

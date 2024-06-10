@@ -51,6 +51,10 @@ class UserService {
                 id: id
             },
         });
+        
+        if (!user) {
+            throw new QueryError("Usuário não cadastrado no sistema!");
+        }
         return user;
     }
 
