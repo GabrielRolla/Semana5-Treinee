@@ -7,6 +7,9 @@ import { NextFunction } from "express";
 import { LoginError } from "../../../../errors/LoginError";
 
 class UserService {
+    updateid(id: string, body: any) {
+        throw new Error("Method not implemented.");
+    }
     async encryptPassword(password: string) {
         const saltRounds = 10;
         const encrypted = await bcrypt.hash(password, saltRounds);
@@ -83,6 +86,26 @@ class UserService {
         const user = await prisma.user.update({
             where: {
                 id: body.id
+            },
+            data: body
+        });
+
+        return user;
+    }
+
+    async updateId(id: number, body: User) {
+        const checkUser = await prisma.user.findUnique({
+            where: {
+                id: id
+            },
+        });
+        if (!checkUser) {
+            throw new QueryError("Usuário não cadastrado no sistema!");
+        }
+
+        const user = await prisma.user.update({
+            where: {
+                id: id
             },
             data: body
         });
