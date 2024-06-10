@@ -1,4 +1,4 @@
-import { login, logout, notLoggedIn, verifyJWT } from "../../../middlewares/auth";
+import { checkRole, login, logout, notLoggedIn, verifyJWT } from "../../../middlewares/auth";
 import { Router, Request, Response, NextFunction } from "express";
 import statusCodes from "../../../../utils/constants/statusCodes";
 import UserService from "../services/UserService";
@@ -62,7 +62,7 @@ router.delete("users/acount/delete", verifyJWT, async (req: Request, res: Respon
     }
 });
 
-router.get("/users", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/users", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const users = await UserService.read();
 		res.json(users);
@@ -71,7 +71,7 @@ router.get("/users", verifyJWT, async (req: Request, res: Response, next: NextFu
 	}
 });
 
-router.get("/users/:id", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/users/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserService.readId(Number(req.params.id));
 		res.json(user);

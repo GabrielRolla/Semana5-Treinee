@@ -100,6 +100,15 @@ export async function notLoggedIn(req: Request, res: Response, next: NextFunctio
     }
 }
 
-export function checkRole() {
-
+export function checkRole(role: string) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            if (req.user.role !== role) {
+                res.status(statusCodes.UNAUTHORIZED).send("Você não tem permissão para realizar essa ação");
+            }
+            next();
+        } catch (err) {
+            next(err);
+        }
+    }
 }
