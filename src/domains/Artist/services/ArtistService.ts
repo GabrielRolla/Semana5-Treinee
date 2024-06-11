@@ -1,6 +1,7 @@
 import { Artist } from "@prisma/client";
 import  prisma  from "../../../../config/prismaClient";
 import { Stream } from "stream";
+import { QueryError } from "../../../../errors/QueryError";
 
 class ArtistService {
     getAll() {
@@ -26,15 +27,32 @@ class ArtistService {
                 id: id
             },
         });
+        if (!artist) {
+            throw new QueryError("Artista não encontrado no sistema!");
+        }
         return artist;
     }
 
-    async read(){
-        const artist = await prisma.artist.findMany ();
-        return artist;
+    async read() {
+        const artists = await prisma.artist.findMany({
+            orderBy: {
+                name: "asc"
+            }
+        });
+
+        return artists;
     }
 
     async update(body: Artist){
+        const checkArtist = await prisma.artist.findUnique({
+            where: {
+                id: body.id
+            },
+        });
+        if (!checkArtist) {
+            throw new QueryError("Artista não existe!");
+        }
+
         const artist = await prisma.artist.update ({
             where: {
                 id: body.id
@@ -45,6 +63,14 @@ class ArtistService {
     }
 
     async deleteId(id:number){
+        const checkArtist = await prisma.artist.findUnique({
+            where: {
+                id: id
+            },
+        });
+        if (!checkArtist) {
+            throw new QueryError("Artista não cadastrado no sistema!");
+        }
         const artist = await prisma.artist.delete({
             where: {
                 id: id
