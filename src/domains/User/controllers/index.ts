@@ -3,10 +3,9 @@ import { Router, Request, Response, NextFunction } from "express";
 import statusCodes from "../../../../utils/constants/statusCodes";
 import UserService from "../services/UserService";
 
-
 const router = Router();
 
-router.post("/users/create", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/create", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.create(req.body);
         res.status(statusCodes.SUCCESS).json(user);
@@ -17,22 +16,18 @@ router.post("/users/create", async (req: Request, res: Response, next: NextFunct
 
 router.post("/login", notLoggedIn, login);
 
-/*
-router.post("/login", notLoggedIn, login, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const user = await login(req, res, next);   
-        res.status(statusCodes.SUCCESS).json(user);
-    } catch (error) {
-        next(error);
-    }
-});
-*/
-
 router.post("/logout", verifyJWT, logout);
 
-router.get("/users/account", verifyJWT, UserService.getAccount)
+router.get("/account", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await UserService.readId(Number(req.params.id));
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
+});
 
-router.put("/users/account/update", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.put("/account/update", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         
         const user = await UserService.update(req.body);
@@ -42,7 +37,7 @@ router.put("/users/account/update", verifyJWT, async (req: Request, res: Respons
     }
 });
 
-router.put("/users/account/password", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.put("/account/password", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         
         const { id, newPassword } = req.body;
@@ -53,7 +48,7 @@ router.put("/users/account/password", verifyJWT, async (req: Request, res: Respo
     }
 });
 
-router.delete("/users/account/delete", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/account/delete", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.body;
         const user = await UserService.deleteId(id);
@@ -63,7 +58,7 @@ router.delete("/users/account/delete", verifyJWT, async (req: Request, res: Resp
     }
 });
 
-router.get("/users", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const users = await UserService.read();
 		res.json(users);
@@ -72,7 +67,7 @@ router.get("/users", verifyJWT, checkRole("admin"), async (req: Request, res: Re
 	}
 });
 
-router.get("/users/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserService.readId(Number(req.params.id));
 		res.json(user);
@@ -81,7 +76,7 @@ router.get("/users/:id", verifyJWT, checkRole("admin"), async (req: Request, res
 	}
 });
 
-router.post("/users/admin/create", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.post("/admin/create", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.create(req.body);
         res.status(statusCodes.SUCCESS).json(user);
@@ -90,7 +85,7 @@ router.post("/users/admin/create", verifyJWT, checkRole("admin"), async (req: Re
     }
 });
 
-router.post("/users/admin/update", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.post("/admin/update", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.update(req.body);
         res.status(statusCodes.SUCCESS).json(user);
@@ -99,7 +94,7 @@ router.post("/users/admin/update", verifyJWT, checkRole("admin"), async (req: Re
     }
 });
 
-router.put("/users/update/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.put("/update/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
         const user = await UserService.updateId(Number(id), req.body);
@@ -109,7 +104,7 @@ router.put("/users/update/:id", verifyJWT, checkRole("admin"), async (req: Reque
     }
 });
 
-router.delete("/users/delete/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/delete/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await UserService.deleteId(Number(req.params.id));
         res.json(user);
@@ -118,13 +113,4 @@ router.delete("/users/delete/:id", verifyJWT, checkRole("admin"), async (req: Re
     }
 });
 
-
-
-
-
-
-
-
-
 export default router;
-
