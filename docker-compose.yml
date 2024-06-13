@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: CONTAINER_API
+    build:
+      context: .
+      dockerfile: api.dockerfile
+    image: BACKEND_API
+    ports:
+      - ${HOST_PORT}:${APP_PORT}
+    volumes:
+      - ./:/api
+    networks:
+      - base_network
+    depends_on:
+      - mysql
+    command: npx prisma migrate deploy && npm start
+
+  mysql:
+    container_name: CONTAINER_BD
+    image: mysql:latest
+    ports:
+      - ${HOST_PORT}:${MYSQL_PORT}
+    volumes:
+      - MYSQL_VOLUME_BD:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+
+networks:
+  base_network:
+    driver: bridge
+
+volumes:
+  MYSQL_VOLUME_BD:
