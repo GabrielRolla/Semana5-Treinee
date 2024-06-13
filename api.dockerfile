@@ -7,9 +7,7 @@ WORKDIR /api
 COPY package*.json /api
 RUN npm install
 
-COPY ./* ./api
-
-RUN npm run build
+COPY . /api
 
 EXPOSE 8080
 
