@@ -2,9 +2,15 @@ FROM node:18-alpine
 
 RUN mkdir /api
 
-COPY ./* ./api
-
 WORKDIR /api
 
+COPY package*.json /api
 RUN npm install
+
+COPY ./* ./api
+
+RUN npm run build
+
+EXPOSE 8080
+
 RUN npx prisma migrate dev --name init
