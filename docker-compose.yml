@@ -16,7 +16,7 @@ services:
       - base_network
     depends_on:
       - mysql
-    command: npx prisma migrate deploy && npm start
+    command: npx prisma db push && npx prisma migrate dev && npm start
 
   mysql:
     container_name: ${CONTAINER_BD_NAME}
