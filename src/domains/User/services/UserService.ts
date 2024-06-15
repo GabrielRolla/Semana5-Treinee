@@ -165,20 +165,6 @@ class UserService {
             },
         });
     }
-
-    async getAccount(body: User) {
-        const user = await prisma.user.findUnique({
-            where: {
-                id: body.id
-            }
-        });
-
-        if (!user) {
-            throw new LoginError("Faça login para acessar sua conta.");
-        }
-
-        return user;
-    }
 }
 
     
