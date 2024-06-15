@@ -9,6 +9,6 @@ RUN npm install
 
 COPY . /api
 
-EXPOSE 8080
+EXPOSE 3000
 
 RUN npx prisma generate

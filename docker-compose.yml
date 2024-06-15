@@ -1,6 +1,3 @@
-version: '3.8'
-
-
 services:
   api:
     container_name: ${CONTAINER_API_NAME}
@@ -9,7 +6,7 @@ services:
       dockerfile: api.dockerfile
     image: ${IMAGE_API}
     ports:
-      - ${APP_PORT}:${APP_PORT}
+      - ${PORT_APP}:${PORT_APP}
     volumes:
       - ./:/api
     networks:
@@ -27,6 +24,8 @@ services:
       - ${PORT_DB}
     volumes:
       - mysql_volume_bd:/var/lib/mysql
+    networks:
+      - base_network
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
