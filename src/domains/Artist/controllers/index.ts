@@ -4,9 +4,9 @@ import ArtistService from "../services/ArtistService";
 
 const router = Router();
 
-router.get("/artists", verifyJWT, ArtistService.read)
+router.get("/", verifyJWT, ArtistService.read)
 
-router.get("/artists/:id", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", verifyJWT, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const artist = await ArtistService.readId(Number(req.params.id));
         res.json(artist);
@@ -15,7 +15,7 @@ router.get("/artists/:id", verifyJWT, async (req: Request, res: Response, next: 
     }
 });
 
-router.post("/artists/create", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.post("/create", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const artist = await ArtistService.create(req.body);
         res.json(artist);
@@ -24,7 +24,7 @@ router.post("/artists/create", verifyJWT, checkRole("admin"), async (req: Reques
     }
 });
 
-router.put("/artists/update", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.put("/update", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const artist = await ArtistService.update(req.body);
         res.json(artist);
@@ -33,7 +33,7 @@ router.put("/artists/update", verifyJWT, checkRole("admin"), async (req: Request
     }
 });
 
-router.delete("/artists/delete/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/delete/:id", verifyJWT, checkRole("admin"), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const artist = await ArtistService.deleteId(Number(req.params.id));
         res.json(artist);
