@@ -83,6 +83,26 @@ class MusicService {
 
         return music;
     }
+
+    async getByArtist(artistId: number) {
+        const checkArtist = await prisma.artist.findUnique({
+            where: {
+                id: artistId
+            }
+        });
+
+        if (!checkArtist) {
+            throw new InvalidParamError("Artista não existe no sistema");
+        }
+
+        const musics = await prisma.music.findMany({
+            where: {
+                artistId: artistId
+            }
+        });
+
+        return musics;
+    }
 }
 
 export default new MusicService();
