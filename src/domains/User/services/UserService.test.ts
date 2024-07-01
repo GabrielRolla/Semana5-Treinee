@@ -1,16 +1,17 @@
-import { before } from "node:test";
+import { beforeEach } from "node:test";
 import prisma from "../../../../config/prismaClient";
 import { prismaMock } from "../../../../config/singleton";
 import { QueryError } from "../../../../errors/QueryError";
 import { User } from "@prisma/client";
 import create from "./UserService";
+import UserService from "./UserService";
 
 describe('create', () => {
-    const User = require('../models/User');
-    const UserService = require('./UserService');
 
+    //const UserService = require('./UserService');
+    //const User = require('@prisma/client');
     beforeEach(() => {
-    
+        
     });
 
     test("deve criar um usuário", async () => {
@@ -25,22 +26,22 @@ describe('create', () => {
 
         prismaMock.user.create.mockResolvedValue(body);
 
-        await expect(create(body)).resolves.toEqual({
+        await expect(UserService.create(body)).resolves.toEqual({
             id: 1,
             name: "Nome",
             email: "email@gmail.com",
             photo: "photo",
             password: "123456",
             role: "admin"
-        })
+        });
 
     });
 
 });
 
 describe('update', () => {
-    const User = require('../models/User');
-    const UserService = require('./UserService');
+    //const User = require('@prisma/client');
+    //const UserService = require('./UserService');
 
     beforeEach(() => { 
     
@@ -49,7 +50,7 @@ describe('update', () => {
     test("deve atualizar um nome de usuário", async () => {
         const body = {
             id: 1,
-            name: "Nome",
+            name: "Nome 2",
             email: "email@gmail.com",
             photo: "photo",
             password: "123456",
@@ -58,9 +59,9 @@ describe('update', () => {
 
         prismaMock.user.update.mockResolvedValue(body);
 
-        await expect(update(body)).resolves.toEqual({
+        await expect(UserService.update(body)).resolves.toEqual({
             id: 1,
-            name: "Nome",
+            name: "Nome 2",
             email: "email@gmail.com",
             photo: "photo",
             password: "123456",
@@ -71,7 +72,7 @@ describe('update', () => {
 
     test('deve falhar ao atualizar um usuário inexistente', async () => {
         const body = {
-            id: "",
+            id: 999,
             name: "Nome",
             email: "email@gmail.com",
             photo: "photo",
@@ -81,7 +82,7 @@ describe('update', () => {
 
         prismaMock.user.update.mockImplementation()
 
-        await expect(update(body)).resolves.toEqual(
+        await expect(UserService.update(body)).resolves.toEqual(
             new QueryError("Usuário não cadastrado no sistema!")
         
         )
@@ -90,18 +91,20 @@ describe('update', () => {
 });
 
 describe('delete', () => {
-    const User = require('../models/User');
-    const UserService = require('./UserService');
+    //const User = require('@prisma/client');
+    //const UserService = require('./UserService');
+    
 
     beforeEach(() => {
     
     });
 
     test('tenta deletar um usuàrio inexistente ==> gera erro', async () => {
+        const id = 1;
         prismaMock.user.findFirst.mockResolvedValue(null);
 
         await expect(UserService.deleteId(id)).rejects.toThrow(
-            new QueryError("Usuário não cadastrado no sistema!")
+            new QueryError("Usuário não existe.")
         );
         
         expect(prismaMock.user.findFirst).toHaveBeenCalledWith({where: {id: id}});
